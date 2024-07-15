@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rand Password</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playwrite+HR+Lijeva:wght@100..400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: Playwrite HR Lijeva, cursive;
+    }
+
+    body {
+      background-color: rgba(73, 114, 210, 0.659);
+
+    }
+
+    h2 {
+      font-family: "Roboto Slab", serif;
+    }
+
+    form {
+
+      background-color: #C80036;
+      align-items: center;
+      justify-content: center;
+      max-width: 250px;
+      max-height: 350px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 5px;
+    }
+
+    .r {
+      text-align: left;
+    }
+
+    button {
+      background-color: #FFF455;
+      border: none;
+      color: rgb(0, 0, 0);
+      padding: 10px;
+      border-radius: 5px;
+      font-family: "Roboto Slab", serif;
+    }
+    button:hover{
+      background-color: #fff455d3;
+
+    }
+    button:active{
+      background-color: rgba(189, 181, 57, 0.827);
+
+    }
+
+    input {
+      border: none;
+      border-radius: 5px;
+      font-family: serif;
+    }
+
+    label {
+      color: white;
+    }
+
+  </style>
+</head>
+
+<body>
+  <form action="" onsubmit="return false;">
+    <h2>Password Generator : </h2>
+    <input type="text" readonly id="input"><br><br>
+
+    <input type="checkbox" id="lowercase" class="r">
+    <label for="lowercase">LowerCase</label><br>
+
+    <input type="checkbox" id="uppercase" class="r">
+    <label for="uppercase">Uppercase</label><br>
+
+    <input type="checkbox" id="numbers" class="r">
+    <label for="numbers">Numbers</label><br>
+
+    <input type="checkbox" id="symbols" class="r">
+    <label for="symbols">Symbols</label><br><br>
+
+    <button id="button" onclick="x();">Generate</button>
+  </form>
+
+  <script>
+    const button = document.getElementById("button");
+    const lower = document.getElementById("lowercase");
+    const upper = document.getElementById("uppercase");
+    const number = document.getElementById("numbers");
+    const symbol = document.getElementById("symbols");
+    const input = document.getElementById("input");
+
+    function x() {
+      const lowerChecked = lower.checked;
+      const upperChecked = upper.checked;
+      const numberChecked = number.checked;
+      const symbolChecked = symbol.checked;
+      const passlength = 10; // You can change the length or make it dynamic
+
+      const password = generatePassword(passlength, lowerChecked, upperChecked, numberChecked, symbolChecked);
+      input.value = password;
+    };
+
+    function generatePassword(length, lower, upper, num, symb) {
+      const lowercase = "abcdefghijklmnopqrstuvwxyz";
+      const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const numbers = "0123456789";
+      const symbols = "!@#$%^&*()_+";
+
+      let allowedchar = "";
+      let password = "";
+      allowedchar += lower ? lowercase : "";
+      allowedchar += upper ? uppercase : "";
+      allowedchar += num ? numbers : "";
+      allowedchar += symb ? symbols : "";
+
+      if (length <= 0) {
+        return `The password must be at least 1 character long`;
+      }
+      if (allowedchar.length === 0) {
+        return `At least choose one type`;
+      }
+
+      for (let i = 0; i < length; i++) {
+        const randomindex = Math.floor(Math.random() * allowedchar.length);
+        password += allowedchar[randomindex];
+      }
+
+      return password;
+    }
+
+    const passlength = 10;
+    const lowercaseChecked = true;
+    const uppercaseChecked = true;
+    const numbersChecked = false;
+    const symbolsChecked = true;
+
+    const password = generatePassword(passlength, lowercaseChecked, uppercaseChecked, numbersChecked, symbolsChecked);
+    console.log(`Generated password : ${password}`);
+  </script>
+</body>
+
+</html>
